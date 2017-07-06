@@ -1,0 +1,72 @@
+alias zconfig="vim ~/.zshrc"
+alias zsource="source ~/.zshrc"
+alias zalias="vim ~/.zsh_aliases"
+alias vimconfig="vim ~/.vimrc"
+alias vimmake="vim ~/.mymake"
+alias vimsave="vim ~/Documents/bordel/save"
+alias show="xmessage -nearmouse -file"
+alias meteo="curl -4 http://wttr.in/Lille"
+alias save="echo $@ >> ~/Documents/bordel/save"
+alias todo="echo $@ >> ~/Documents/bordel/todo"
+
+# PHP {
+alias php5='docker run -it --rm -P -v `pwd`:/src -w /src php:5.5 php -d date.timezone=Europe/Paris'
+alias php7='docker run -it --rm -P -v `pwd`:/src -w /src php:7 php -d date.timezone=Europe/Paris'
+alias phploc='docker run -it -v `pwd`:/app dotronglong/phploc'
+alias composer='docker run -it --rm -u `id -u` -v `pwd`:/app composer/composer:1-alpine'
+alias php-cs-fixer='docker run --rm -e LOCAL_USER_ID=`id -u` -v `pwd`:/project herloct/php-cs-fixer'
+# }
+
+# restart the keyboard; useful when working with PHPStorm and ibus < 1.5.11 on Linux
+alias ib="ibus restart; sleep 1; setxkbmap fr"
+
+# global makefile
+alias mymake="make -f ~/.mymake --quiet"
+alias m="mymake"
+
+# Docker
+alias dc="docker-compose"
+
+# cd
+alias -- -="cd -"
+alias 1="cd -1"
+alias 2="cd -2"
+alias 3="cd -3"
+alias 4="cd -4"
+alias 5="cd -5"
+alias 6="cd -6"
+alias 7="cd -7"
+alias 8="cd  8"
+alias 9="cd -9"
+
+
+#############
+# FUNCTIONS #
+#############
+tree () {
+  find $@ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+}
+
+# stop and remove a docker container
+dsr () {
+    docker stop $@
+    docker rm $@
+}
+
+function rebase_with_branch() {
+    local branch=$1
+    if [ -z "$branch" ]; then
+        branch="master"
+    fi
+
+     git pull --rebase origin $branch
+}
+
+### hostmanager
+alias hm="dsr docker-hostmanager > /dev/null 2>&1; docker run -d --name docker-hostmanager -v /etc/hosts:/hosts -v /var/run/docker.sock:/var/run/docker.sock iamluc/docker-hostmanager"
+
+alias localhost='dsr index; docker run --name index  -p 3535:80 -d -v `pwd`:/var/www/html php:7.0-apache'
+alias localSF='dsr sf; docker run --name sf -d -v `pwd`:/var/www/html keversc/test';
+
+alias irc='docker run -it --rm -e TERM -u `id -u`:`id -g` --log-driver=none -v $HOME/.irssi:/home/user/.irssi:ro -v /etc/localtime:/etc/localtime:ro irssi'
+
