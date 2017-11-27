@@ -49,12 +49,13 @@ ZSH_THEME="keversc"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sudo jira colored-man-pages z fancy-ctrl-z)
+plugins=(git sudo colored-man-pages z fancy-ctrl-z)
 
 # User configuration
 
-export PATH="$PATH:/usr/local/bin/PhpStorm/bin:/usr/local/arcanist/bin:/usr/local/bin/java_jdk/bin:/usr/local/bin/gradle/bin:/usr/local/bin/android/bin"
+export PATH="$PATH:/usr/local/bin/PhpStorm/bin:/usr/local/bin/java_jdk/bin:/usr/local/bin/gradle/bin:/usr/local/bin/android/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
+export ANDROID_HOME="$HOME/Android/Sdk"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -79,11 +80,6 @@ setopt autocd
 setopt rmstarsilent
 setopt auto_param_keys
 
-# config plugin jira
-export JIRA_NAME="kverschaeve"
-export JIRA_RAPID_BOARD=true
-export JIRA_DEFAULT_ACTION="dashboard"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_ folder.
@@ -93,3 +89,17 @@ export JIRA_DEFAULT_ACTION="dashboard"
 if [ -f ~/.zsh_aliases ]; then
 	. ~/.zsh_aliases
 fi
+
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# TETRIS \0/
+autoload -U tetris
+zle -N tetris
+bindkey ^T tetris
+
+todolist
+
