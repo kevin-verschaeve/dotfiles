@@ -4,3 +4,10 @@ npm-debug.log
 last.html
 .php_cs.cache
 meminfo
+.rules
+formation
+exo*
+tamere*
+.php-version
+yarn-error.log
+gcloud-service-key.json

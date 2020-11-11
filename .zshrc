@@ -5,7 +5,7 @@ export ZSH=/home/kevinverschaeve/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="keversc"
+ZSH_THEME=${ZTHEME:-keversc}
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,13 +49,13 @@ ZSH_THEME="keversc"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sudo colored-man-pages z fancy-ctrl-z)
+plugins=(git sudo colored-man-pages z git-open)
 
 # User configuration
 
-export PATH="$PATH:/usr/local/bin/PhpStorm/bin:/usr/local/bin/java_jdk/bin:/usr/local/bin/gradle/bin:/usr/local/bin/android/bin"
+export PATH="$PATH:/usr/local/bin/PhpStorm/bin:/usr/local/bin/java_jdk/bin:/usr/local/bin/gradle/bin:/usr/local/bin/android/bin:$HOME/.symfonycloud/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
-export ANDROID_HOME="$HOME/Android/Sdk"
+# export ANDROID_HOME="$HOME/Android/Sdk"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -79,6 +79,7 @@ source $ZSH/oh-my-zsh.sh
 setopt autocd
 setopt rmstarsilent
 setopt auto_param_keys
+#setopt GLOBSTARSHORT
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -101,5 +102,26 @@ autoload -U tetris
 zle -N tetris
 bindkey ^T tetris
 
-todolist
+todofile="/home/kevinverschaeve/Documents/bordel/todo"
+if [ -f "$todofile" -a -s "$todofile" ]; then
+    todolist
+fi
 
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C "/home/kevinverschaeve/.symfonycloud/bin/symfonycloud self:autocomplete --zsh" symfonycloud
+
+# BEGIN SNIPPET: Platform.sh CLI configuration
+HOME=${HOME:-'/home/kevinverschaeve'}
+export PATH="$HOME/"'.platformsh/bin':/usr/local/go/bin:"$PATH"
+if [ -f "$HOME/"'.platformsh/shell-config.rc' ]; then . "$HOME/"'.platformsh/shell-config.rc'; fi # END SNIPPET
+
+
+export GOPATH="/home/kevinverschaeve/go"
+
+
+export GANTI_APP=/home/kevinverschaeve/perso/ganti
+export GANTI_INSTALL=/home/kevinverschaeve/perso/ganti/install
+export GANTI_APP_MYSQL=/home/kevinverschaeve/perso/ganti/mysqldata
+export GANTI_APP_BACKUP=/home/kevinverschaeve/perso/ganti/backup
+export GANTI_APP_CONFIG=/home/kevinverschaeve/perso/ganti/confi

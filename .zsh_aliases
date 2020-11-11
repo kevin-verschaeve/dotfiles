@@ -1,6 +1,6 @@
 alias zconfig="vim ~/.zshrc"
 alias zsource="source ~/.zshrc"
-alias zalias="vim ~/.zsh_aliases"
+alias zalias='vim ~/.zsh_aliases'
 alias vimconfig="vim ~/.vimrc"
 alias vimmake="vim ~/.mymake"
 alias vimsave="vim ~/Documents/bordel/save"
@@ -9,11 +9,16 @@ alias meteo="curl -4 http://wttr.in/Lille"
 alias save="echo $@ >> ~/Documents/bordel/save"
 alias todo="echo $@ >> ~/Documents/bordel/todo"
 alias todolist="cat ~/Documents/bordel/todo"
-alias ok="sed -i \"/$@/d\" ~/Documents/bordel/todo"
+alias screen="gnome-screenshot -a"
+alias sc="symfonycloud"
+alias sf="symfony"
+alias cat="bat"
+
+alias -g G="| grep"
 
 # PHP {
 alias php5='docker run -it --rm -P -v `pwd`:/src -w /src php:5.5 php -d date.timezone=Europe/Paris'
-alias php7='docker run -it --rm -P -v `pwd`:/src -w /src php:7 php -d date.timezone=Europe/Paris'
+alias php72='docker run -it --rm -P -v `pwd`:/src -w /src php:7.2 php -d date.timezone=Europe/Paris'
 alias phploc='docker run -it -v `pwd`:/app dotronglong/phploc'
 alias c='docker run -it --rm -v `pwd`:/app -v ~/.ssh:/root/.ssh keversc/composer' # composer ...
 alias php-cs-fixer='docker run --rm -e LOCAL_USER_ID=`id -u` -v `pwd`:/project herloct/php-cs-fixer'
@@ -43,10 +48,10 @@ alias 4="cd -4"
 alias 5="cd -5"
 alias 6="cd -6"
 alias 7="cd -7"
-alias 8="cd  8"
+alias 8="cd -8"
 alias 9="cd -9"
 
-alias vpn="sudo openvpn --config ~/Téléchargements/kverschae001@asta.botanic.com.ovpn --auth-user-pass ~/Téléchargements/botanic.credentials"
+alias vpn="sudo openvpn --config ~/Documents/boulot/motoblouz/d3t.ovpn --auth-user-pass ~/Documents/boulot/motoblouz/.credentials"
 
 #############
 # FUNCTIONS #
@@ -61,24 +66,24 @@ dsr () {
     docker rm $@
 }
 
-function rebase_with_branch() {
-    local branch=$1
-    if [ -z "$branch" ]; then
-        branch="master"
-    fi
-
-     git pull --rebase origin $branch
-}
-
 apply () {
     git stash apply $(git stash list | grep "$@" | awk '{print substr($1, 1, length($1) - 1)}')
 }
+
+did () {
+	sed -i "/$@/d" ~/Documents/bordel/todo
+}
+
+sftail () {
+    local file=$1
+    symfony server:log --file=${file:="var/log/dev.log"}
+}
+
 ### hostmanager
 alias hm="dsr docker-hostmanager > /dev/null 2>&1; docker run -d --name docker-hostmanager -v /etc/hosts:/hosts -v /var/run/docker.sock:/var/run/docker.sock iamluc/docker-hostmanager"
 
 alias localhost='dsr index; docker run --name index  -p 3535:80 -d -v `pwd`:/var/www/html php:7.0-apache'
-alias localSF='dsr sf; docker run --name sf --net docker -d -v `pwd`:/var/www/html keversc/test';
-alias flexify='dsr flex; docker run --name flex -p 666:80 --net docker -d -v `pwd`:/var/www/html keversc/flex';
+alias localSF='dsr v3; docker run --name v3 --net d3t -d -v `pwd`:/var/www/html keversc/php7.2';
+alias flexify='dsr flex; docker run --name flex -p 666:80 --net d3t -d -v `pwd`:/var/www/html keversc/flex';
 
 alias irc='docker run -it --rm -e TERM -u `id -u`:`id -g` --log-driver=none -v $HOME/.irssi:/home/user/.irssi:ro -v /etc/localtime:/etc/localtime:ro irssi'
-
